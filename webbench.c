@@ -465,14 +465,6 @@ void build_request(const char *url)
 	/* add post data */
 	if(method==METHOD_POST)
 	{
-		if(postdata)
-		{
-			strcat(request, "Accept: */*\r\n");
-			strcat(request, "Content-Length: ");
-			strcat(request, postdatalen);
-			strcat(request, "\r\nContent-Type: application/x-www-form-urlencoded\r\n\r\n");
-			strcat(request, postdata);
-		}
 		if(postdataall)
 		{
 			requestall = calloc(POSTDATA_SIZE, postdataallline);
@@ -494,6 +486,14 @@ void build_request(const char *url)
 			}
 			requestallsize = i;
 			clients = i < clients ? i : clients;
+		}
+		else
+		{
+			strcat(request, "Accept: */*\r\n");
+			strcat(request, "Content-Length: ");
+			strcat(request, postdatalen);
+			strcat(request, "\r\nContent-Type: application/x-www-form-urlencoded\r\n\r\n");
+			strcat(request, postdata);
 		}
 	}
 	/* add empty line at end */
